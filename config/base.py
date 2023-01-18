@@ -33,6 +33,7 @@ DEFAULT_APPS = [
 #!Third Part App
 THIRD_PARTY_APPS = [
     'django_cleanup',
+    'multiselectfield'
 ]
 
 #!Created Apps
@@ -79,6 +80,7 @@ TEMPLATES = [
 #!Wsgi Application
 WSGI_APPLICATION = 'config.wsgi.application'
 
+AUTH_USER_MODEL = 'account.Account'
 
 #!Auth Password Validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -109,6 +111,8 @@ TIME_ZONE = 'Asia/Baku'
 USE_I18N = True #A boolean that specifies whether Django's translation system should be enabled
 USE_L10N = True #Numbers and dates using the format of the current locale.
 USE_TZ = True
+
+DATE_INPUT_FORMATS = ['%m-%d-%Y']
 
 
 #!Static files (CSS, JavaScript, Images)
