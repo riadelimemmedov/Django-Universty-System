@@ -23,25 +23,23 @@ from multiselectfield import MultiSelectField
 #!MyAccountManager
 class MyAccountManager(BaseUserManager):
     
-    def _create_user(self,first_name,last_name,username,email,password=None,**extra_fields):
+    def _create_user(self,email,password=None,**extra_fields):
         if not email:
             raise ValueError('User must have an email address')
-        if not username:
-            raise ValueError('User must have an username')
         
         email = self.normalize_email(email)
-        user = self.model(email=self.normalize_email(email),username=username,first_name=first_name,last_name=last_name)
+        user = self.model(email=email,**extra_fields)
         user.password = make_password(password)
         user.save(using=self._db)
         return user
     
-    def create_user(self,first_name,last_name,username,email,password=None,**extra_fields):        
+    def create_user(self,email,password=None,**extra_fields):        
         extra_fields.setdefault('is_staff',False)
         extra_fields.setdefault('is_superuser',False)
-        return self._create_user(first_name,last_name,username,email,password,**extra_fields)
+        return self._create_user(email,password,**extra_fields)
     
     
-    def create_superuser(self,first_name,last_name,email,username,password,**extra_fields):
+    def create_superuser(self,email,password,**extra_fields):
         extra_fields.setdefault('is_staff',True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault('is_admin',True)
@@ -57,7 +55,7 @@ class MyAccountManager(BaseUserManager):
         # user.is_active=True
         # user.is_staff=True
         # user.is_superadmin=True
-        return self._create_user(first_name,last_name,username,email,password,**extra_fields)
+        return self._create_user(email,password,**extra_fields)
 
 
 #!Account
