@@ -24,7 +24,6 @@ class AccountAdmin(UserAdmin):
                 "fields":("is_active", "is_staff", "is_superuser", "groups", "user_permissions")
             },
         ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
     add_fieldsets = (
         (
@@ -43,10 +42,7 @@ class AccountAdmin(UserAdmin):
             },
         ),
     )
-
-    
-    
     list_display = ("first_name","last_name","phone","is_staff","date_joined","last_login")
+    list_filter = ("is_staff","is_superuser","is_admin","is_superadmin","is_active")
     search_fields = ("first_name", "last_name","email", "phone")
-    
-    
+    readonly_fields = ("date_joined","last_login")

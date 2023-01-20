@@ -106,7 +106,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'),auto_now_add=True)
     last_login = models.DateTimeField(_('last login'),auto_now_add=True)
     
-    password_updated_date = models.DateTimeField(_('password updated date'),default=django.utils.timezone.now)
+    password_updated_date = models.DateTimeField(_('password updated date'),auto_now_add=True)
     
     
     EMAIL_FIELD = "email"
@@ -165,7 +165,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     #*set_password
     def set_password(self,raw_password):
         super().set_password(raw_password)
-        self.password_updated_date = django.utils.timezone.now
+        self.password_updated_date = timezone.now()
     
     
     """#?email_user not using yet
