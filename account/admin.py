@@ -24,25 +24,29 @@ class AccountAdmin(UserAdmin):
                 "fields":("is_active", "is_staff", "is_superuser", "groups", "user_permissions")
             },
         ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    
     add_fieldsets = (
-        None,
-        {
-            "class":("wide"),
-            "fields":(
-                "first_name",
-                "last_name",
-                "email",
-                "birthdate",
-                "phone",
-                "type",
-                "password1",
-                "password2",
-            )
-        }
+        (
+            None,
+            {
+                "classes": ("wide"),
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "phone",
+                    "type",
+                    "password1",
+                    "password2",
+                ),
+            },
+        ),
     )
+
     
     
     list_display = ("first_name","last_name","phone","is_staff","date_joined","last_login")
+    search_fields = ("first_name", "last_name","email", "phone")
+    
     

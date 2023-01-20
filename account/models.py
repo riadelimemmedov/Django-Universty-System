@@ -23,7 +23,7 @@ from multiselectfield import MultiSelectField
 #!MyAccountManager
 class MyAccountManager(BaseUserManager):
     
-    def _create_user(self,email,password=None,**extra_fields):
+    def _create_user(self,email,password,**extra_fields):
         if not email:
             raise ValueError('User must have an email address')
         
@@ -39,7 +39,7 @@ class MyAccountManager(BaseUserManager):
         return self._create_user(email,password,**extra_fields)
     
     
-    def create_superuser(self,email,password,**extra_fields):
+    def create_superuser(self,email,password=None,**extra_fields):
         extra_fields.setdefault('is_staff',True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault('is_admin',True)
