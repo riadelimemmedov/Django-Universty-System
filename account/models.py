@@ -2,6 +2,8 @@
 # Create your models here.from django.db import models
 #Django Function
 import django
+import os
+
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -51,10 +53,6 @@ class MyAccountManager(BaseUserManager):
         
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True')
-        # user.is_admin=True
-        # user.is_active=True
-        # user.is_staff=True
-        # user.is_superadmin=True
         return self._create_user(email,password,**extra_fields)
 
 
@@ -128,7 +126,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     
     #*get_full_name
     def get_full_name(self) -> str:
-        full_name = "%s %s %s" % (self.first_name, self.last_name, self.phone)
+        full_name = "{} {} {}".format(self.first_name,self.last_name,self.phone)
         return full_name.strip()
     
     
@@ -147,7 +145,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     #*name
     @property
     def name(self) -> str:
-        name = "%s %s" % (self.first_name,self.last_name)
+        name = "{} {}".format(self.first_name,self.last_name)
         return name.strip()
     
     

@@ -59,11 +59,8 @@ def get_profile_photo_upload_path(instance,filename):
 def slugify(text:str) -> str:#*return string value
     mapping:list = symbols_mapping+lower_case_mapping
     text = text.lower()
-    print('text value in slugify image ', text)
     
     for before,after in mapping:
-        print('before value in slugify methods ', before)
-        print('after value in slugify methods ', before)
         text = text.replace(before,after)
     return text
     

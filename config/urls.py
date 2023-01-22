@@ -38,7 +38,6 @@ if settings.APP_NAME == AppName.ADMIN.name:
     urlpatterns += [
         path('jet/',include('jet.urls','jet')),
         path("jet/dashboard/", include("jet.dashboard.urls","jet-dashboard")),
-        #path("ckeditor/", include("ckeditor_uploader.urls")),=>add ckeditor after and configuration base file => 
     ]
     
     urlpatterns += i18n_patterns(
