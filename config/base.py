@@ -33,7 +33,9 @@ DEFAULT_APPS = [
 #!Third Part App
 THIRD_PARTY_APPS = [
     'django_cleanup',
-    'multiselectfield'
+    'multiselectfield',
+    'ckeditor',
+    'cities_light'
 ]
 
 #!Created Apps
@@ -100,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #!Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
-LANGUAGE_CODE = "az"
+LANGUAGE_CODE = "en"#production => az
 
 LANGUAGES = [
     ("az", _("Azerbaijani")),
@@ -136,6 +138,9 @@ else:#if site deployed to production
 #!MediuUrl and MediaRoot
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+#!Ckedito Upload Path
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 
 #!Jet Themes

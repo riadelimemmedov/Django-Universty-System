@@ -1,9 +1,11 @@
 
 # Create your models here.from django.db import models
+#Python Modules
+import os
+import uuid
+
 #Django Function
 import django
-import os
-
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -19,6 +21,8 @@ from .helpers import get_profile_photo_upload_path,phone_message,phone_regex,nam
 
 #Third Party Packages
 from multiselectfield import MultiSelectField
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
@@ -93,9 +97,23 @@ class Account(AbstractBaseUser,PermissionsMixin):
     phone = models.CharField(_('phone'),validators=[phone_regex],max_length=12,blank=True,null=True,unique=True,help_text=phone_message)
     
     
+    
     #!Extra Profile Data
     photo = models.ImageField(upload_to=get_profile_photo_upload_path,null=True,blank=True)
-    birthdate = models.DateField(_("birthdate"),auto_now=True,null=True, blank=True)
+    
+    ###
+    background_picture = models.ImageField(upload_to='background-picture/',null=True,blank=True)
+    headline = models.CharField(_('headline'),max_length=255,null=True,blank=True)
+    show_headline_in_bio = models.BooleanField(_('I want to use this as my bio'),default=False)
+    summary = RichTextUploadingField(_('Your Profile Summary'),blank=True,null=True)
+    country = models.ForeignKey('cities_light.Country',on_delete=models.SET_NULL,null=True) 
+    city = models.ForeignKey('cities_light.City',on_delete=models.SET_NULL, null=True)
+    date_of_admission = models.DateField(_('date of admission'),null=True)
+    registration_number = models.CharField(_('registration number'),max_length=200,db_index=True,null=True,blank=True,unique=True,)
+    ###
+
+
+    birthdate = models.DateField(_("birthdate"),null=True,blank=True)
     type = models.CharField(_('type'),max_length=20,choices=Types.choices,null=True,blank=False)
     status = models.CharField(_('status'),max_length=20,choices=Status.choices,null=True,default=Status.choices[0][0])
     gender = models.CharField(_('gender'),max_length=20,choices=Gender.choices,null=True)
@@ -117,6 +135,11 @@ class Account(AbstractBaseUser,PermissionsMixin):
         verbose_name = _('account')
         verbose_name_plural = _('accounts')
     
+    
+    #*save
+    def save(self,*args,**kwargs):
+        self.registration_number = str(uuid.uuid4())[:12].replace('-','').upper()
+        super(Account,self).save(*args,**kwargs)
     
     #*clean
     def clean(self) -> None:
@@ -196,3 +219,6 @@ class Account(AbstractBaseUser,PermissionsMixin):
     #*has_module_perms    
     def has_module_perms(self,add_label):
         return True
+
+
+

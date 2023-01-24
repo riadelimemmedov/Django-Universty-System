@@ -28,7 +28,15 @@ class AccountAdmin(UserAdmin):
                     "first_name",
                     "last_name",
                     'type',
-                    "photo"
+                    "photo",
+                    "background_picture",
+                    "headline",
+                    "show_headline_in_bio",
+                    "summary",
+                    "country",
+                    "city",
+                    "date_of_admission",
+                    "registration_number"
                 )
             },
         ),
@@ -52,7 +60,13 @@ class AccountAdmin(UserAdmin):
                     "type",
                     "password1",
                     "password2",
-                    "photo"
+                    "photo",
+                    "background_picture",
+                    "headline",
+                    "show_headline_in_bio",
+                    "summary",
+                    "country",
+                    "city",
                 ),
             },
         ),
@@ -62,4 +76,3 @@ class AccountAdmin(UserAdmin):
     list_display_links = ("thumbnail","first_name","last_name")
     search_fields = ("first_name", "last_name","email", "phone")
     readonly_fields = ("date_joined","last_login")
-    
