@@ -1,11 +1,15 @@
-
 # Create your models here.from django.db import models
+
+#short path with .. 
+import sys
+sys.path.append('..')
+
+
 #Python Modules
 import os
 import uuid
 
 #Django Function
-import django
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -15,14 +19,15 @@ from django.db.models.signals import post_save
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 
-#Helpers Function
-from .helpers import get_profile_photo_upload_path,phone_message,phone_regex,name_message,name_regex
+#Helpers Function and Database Modules
+from config.helpers import (get_profile_photo_upload_path,phone_message,phone_regex,name_message,name_regex,random_code)
 
 
 #Third Party Packages
 from multiselectfield import MultiSelectField
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from PIL import Image
 
 # Create your models here.
 
@@ -99,7 +104,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     
     
     #!Extra Profile Data
-    photo = models.ImageField(upload_to=get_profile_photo_upload_path,null=True,blank=True)
+    photo = models.ImageField(upload_to=get_profile_photo_upload_path,null=True,blank=False)
     
     ###
     background_picture = models.ImageField(upload_to='background-picture/',null=True,blank=True)
@@ -108,8 +113,11 @@ class Account(AbstractBaseUser,PermissionsMixin):
     summary = RichTextUploadingField(_('Your Profile Summary'),blank=True,null=True)
     country = models.ForeignKey('cities_light.Country',on_delete=models.SET_NULL,null=True) 
     city = models.ForeignKey('cities_light.City',on_delete=models.SET_NULL, null=True)
+    adress = models.CharField(_('adress'),max_length=50,null=True)
     date_of_admission = models.DateField(_('date of admission'),null=True)
-    registration_number = models.CharField(_('registration number'),max_length=200,db_index=True,null=True,blank=True,unique=True,)
+    registration_number = models.CharField(_('registration number'),max_length=50,db_index=True,null=True,blank=True,unique=True)
+    father_name = models.CharField(_("father's name"), max_length=150,null=True,validators=[name_regex], help_text=name_message)
+    website_links = models.URLField(_('website links'),default='')
     ###
 
 
@@ -134,11 +142,13 @@ class Account(AbstractBaseUser,PermissionsMixin):
     class Meta:
         verbose_name = _('account')
         verbose_name_plural = _('accounts')
+        ordering = ['first_name','last_name','username']
     
     
     #*save
     def save(self,*args,**kwargs):
-        self.registration_number = str(uuid.uuid4())[:12].replace('-','').upper()
+        #save registration_number
+        self.registration_number = random_code()
         super(Account,self).save(*args,**kwargs)
     
     #*clean
@@ -151,7 +161,6 @@ class Account(AbstractBaseUser,PermissionsMixin):
     def get_full_name(self) -> str:
         full_name = "{} {} {}".format(self.first_name,self.last_name,self.phone)
         return full_name.strip()
-    
     
     #*full_name
     @property
@@ -208,8 +217,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     
     #*__str__
     def __str__(self):
-        return str(self.email)
-    
+        return f"{self.username} {self.first_name} {self.last_name} {self.registration_number}"
     
     #*__has_perm__
     def has_perm(self,perm,obj=None):

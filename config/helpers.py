@@ -1,10 +1,15 @@
+#Python modules
 import os
+import uuid
 from datetime import datetime
 from random import randint
 from time import time
 
+
+#Django Function
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
+from django.utils.text import slugify
 from PIL import Image
 
 phone_message = _('Phone number must be in this format:994xxxxxxxxx')
@@ -47,7 +52,7 @@ upper_case_mapping = [
 def generate_file_path(base:str,filename):
     today = datetime.today()
     name,extension = os.path.splitext(filename)
-    return f"{base}/{today.year}/{today.month}/{slugify(name)}-{str(randint(100000, 999999))}{extension}"
+    return f"{base}/{today.year}/{today.month}/{slugifyText(name)}-{str(randint(100000, 999999))}{extension}"
 
 
 #!get_profile_photo_upload_path
@@ -55,12 +60,27 @@ def get_profile_photo_upload_path(instance,filename):
     return generate_file_path('profile',filename)
 
 
+#!random_code
+def random_code():
+    generated_number = str(uuid.uuid4())[:12].replace('-','').upper()
+    return generated_number
+
+
+#!slugifyTitle
+def slugifyNameSurname(title):
+    return slugify(title)
+
+
+
 #!slugify
-def slugify(text:str) -> str:#*return string value
+def slugifyText(text:str) -> str:#*return string value
     mapping:list = symbols_mapping+lower_case_mapping
     text = text.lower()
     
     for before,after in mapping:
         text = text.replace(before,after)
     return text
-    
+
+
+
+

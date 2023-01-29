@@ -41,7 +41,12 @@ THIRD_PARTY_APPS = [
 #!Created Apps
 CREATED_APPS = [
     'abstract',
-    'account'
+    'account',
+    'core',
+    'school',
+    'library',
+    'teacher',
+    'student'
 ]  
 
 #!Installed Apps
