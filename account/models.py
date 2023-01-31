@@ -116,7 +116,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     adress = models.CharField(_('adress'),max_length=50,null=True)
     date_of_admission = models.DateField(_('date of admission'),null=True)
     registration_number = models.CharField(_('registration number'),max_length=50,db_index=True,null=True,blank=True,unique=True)
-    father_name = models.CharField(_("father's name"), max_length=150,null=True,validators=[name_regex], help_text=name_message)
+    # father_name = models.CharField(_("father's name"), max_length=150,null=True,validators=[name_regex], help_text=name_message)
     website_links = models.URLField(_('website links'),default='')
     ###
 

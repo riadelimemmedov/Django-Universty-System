@@ -30,7 +30,7 @@ from django_extensions.db.models import TimeStampedModel
 
 #     def __str__(self):
 #         return '{} - {}'.format(self.year, self.year + 1) #=> interval of years
-    
+
 #     def create_resource(self):
 #         return reverse('academics:create_academic_session')
 
@@ -99,9 +99,9 @@ from django_extensions.db.models import TimeStampedModel
 #         blank=True,
 #         null=True
 #     )
-#     # * not exists yet <Teacher> module => head = models.ForeignKey(Teacher,on_delete=models.CASCADE,blank=True, null=True)
+#     # not exists yet <Teacher> module => head = models.ForeignKey(Teacher,on_delete=models.CASCADE,blank=True, null=True)
     
-#     #* not exits yet <Batch> current_batch = models.ForeignKey('Batch', on_delete=models.CASCADE,blank=True, null=True,#Hansi qruplara baxir yeni
+#     # not exits yet <Batch> current_batch = models.ForeignKey('Batch', on_delete=models.CASCADE,blank=True, null=True,#Hansi qruplara baxir yeni
 #     #     related_name='current_batches'#Indi hansi qrupdu secilen ile gore
 #     # )
 #     # batches = models.ManyToManyField(#Umimi neler ola biler
@@ -130,3 +130,56 @@ from django_extensions.db.models import TimeStampedModel
 
 
 
+
+#!Semestr
+# class Semester(TimeStampedModel):
+#     number = models.PositiveIntegerField(unique=True)
+#     teacher = models.ManyToMany(Teacher,related_name='teacher_semester',null=True, blank=True)
+#     lessons = models.ManyToManyField(Lesson)
+#     total_hours = models.PositiveIntegerField(default=0)
+
+#     class Meta:
+#         ordering = ['number', ]
+
+#     def __str__(self):
+#         if self.number == 1:
+#             return '1st'
+#         if self.number == 2:
+#             return '2nd'
+#         if self.number == 3:
+#             return '3rd'
+#         if self.number and 3 < self.number <= 12:
+#             return '%sth' % self.number
+    
+#     def create_resource(self):
+#         return reverse('academics:create_semester')
+
+
+
+#!AcademicSession
+# class AcademicSession(TimeStampedModel):
+#     year = models.PositiveIntegerField(unique=True)#for example,2022 is a AcademicSession
+
+#     def __str__(self):
+#         return '{} - {}'.format(self.year, self.year + 1)
+    
+#     def create_resource(self):
+#         return reverse('academics:create_academic_session')
+
+
+
+#!Awards
+# class Awards(models.Model):
+#         awards_name = models.CharField(max_length=100)
+#         owner_awards_account = models.ManyToManyField(Account,related_name='awards_user')
+        
+#         def __str__(self):
+#                 return str(self.awards_name)
+
+
+#!Revenue
+# class Revenue(models.Model):
+#     students = models.ManyToMany(Student,related_name='student')
+
+#     def __str__(self):
+#         return str(self.students__name)

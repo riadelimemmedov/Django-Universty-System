@@ -132,8 +132,8 @@ from ckeditor.fields import RichTextField
 #     book_slug = models.SlugField(_('book slug'),unique=True,db_index=True,blank=True)
 #     book_image = models.ImageField(_('book image'),upload_to='book/',validators=[FileExtensionValidator[('png','jpg','jpeg')]])
     
-#     # * not exists yet <(department)> table = models.ForeignKey(Department,on_delete=models.CASCADE)
-#     #* not exists yet <(batch)> = models.ForeignKey(Batch,on_delete=models.CASCADE)
+    # not exists yet <(department)> table = models.ForeignKey(Department,on_delete=models.CASCADE)
+#   #  not exists yet <(batch)> = models.ForeignKey(Batch,on_delete=models.CASCADE)
     
 #     category = models.ForeignKey(CategoryBook,on_delete=models.SET_NULL,null=True,related_name='category_book')
 #     book_type = models.CharField(_('book_type'),max_length=50,choices=BookChoices.choices,default=BookChoices.choices.BOOK)

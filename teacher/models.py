@@ -45,6 +45,8 @@ from account.models import Account
 # class Teacher(TimeStampedModel):
 #     account = models.ForeignKey(_('profile'),Account,on_delete=models.CASCADE,null=True)
 #     designation = models.ForeignKey(_('designation'),Designation,on_delete=models.CASCADE,related_name='designation_teacher')
+      #father_name = models.CharField(_('father name'),max_length=50)
+        
 #     is_phd = models.BooleanField(_('is phd'),default=False)
 #     expertise = TaggableManager()
 #     lessons = models.ManyToManyField(Lesson,related_name='lessons_teacher')#According to the semestr value
