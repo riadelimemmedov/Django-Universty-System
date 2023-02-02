@@ -70,6 +70,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
 
     class Types(models.TextChoices):#?+
         ADMIN = "ADMIN",_('admin'),
+        DEAN = 'DEAN',_('dean'),
         STUDENT = "STUDENT",_('student')
         TEACHER = "TEACHER",_('teacher')
         DRIVER = "DRIVER",_('driver')

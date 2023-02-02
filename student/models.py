@@ -12,6 +12,8 @@ from django.utils.translation import gettext_lazy as _
 import uuid
 
 #Helpers Function and Database Modules
+from account.models import Account
+from core.models import (Department)
 from config.helpers import (get_profile_photo_upload_path,phone_message,phone_regex,name_message,name_regex,random_code,slugifyNameSurname)
 
 #Third Party Packages
@@ -33,46 +35,47 @@ from django_extensions.db.models import TimeStampedModel
 # class AlumniManager(models.Manager):
 #     def get_queryset(self):
 #         return super().get_queryset().filter(is_alumni=True)
-    
+
 
 #!StudentBase
-# class StudentBase(TimeStampedModel):
-#     TRIBAL_STATUS = (
-#         (1, 'Yes'),
-#         (0, 'No'),
-#     )
-#     CHILDREN_OF_FREEDOM_FIGHTER = (
-#         (1, 'Yes'),
-#         (0, 'No'),
-#     )
-#     fathers_name = models.CharField(_("Father's Name"),max_length=100)
-#     mothers_name = models.CharField(_("Mother's Name"),max_length=100)
-#     current_address = models.TextField(_('current adress'))
-#     permanent_address = models.TextField(_('permanent adress'))
-#     guardian_mobile_number = models.CharField(_('guardian mobile number'),validators=[phone_regex],max_length=12,blank=True,null=True,unique=True,help_text=phone_message)
-    
-#     tribal_status = models.PositiveSmallIntegerField(
-#         choices=TRIBAL_STATUS, default=0
-#     )
-#     children_of_freedom_fighter = models.PositiveSmallIntegerField(
-#         choices=TRIBAL_STATUS, default=0
-#     )
-#     department_choice = models.ForeignKey(
-#         Department,
-#         on_delete=models.CASCADE
-#     )
-#     class Meta:
-#         abstract = True
-
-#     def __str__(self):
-#         return str(self.name)
-
+class StudentBase(TimeStampedModel):
+      TRIBAL_STATUS = (
+            (1, 'Yes'),
+            (0, 'No'),
+      )
+      CHILDREN_OF_FREEDOM_FIGHTER = (
+            (1, 'Yes'),
+            (0, 'No'),
+      )
+      fathers_name = models.CharField(_("Father's Name"),max_length=100)
+      mothers_name = models.CharField(_("Mother's Name"),max_length=100)
+      current_address = models.TextField(_('current adress'))
+      permanent_address = models.TextField(_('permanent adress'))
+      guardian_mobile_number = models.CharField(_('guardian mobile number'),validators=[phone_regex],max_length=12,blank=True,null=True,unique=True,help_text=phone_message)
+      is_orphan = models.BooleanField(_('orphan'),default=False)
+      
+      tribal_status = models.PositiveSmallIntegerField(
+            choices=TRIBAL_STATUS,default=0
+      )
+      children_of_war_fighter = models.PositiveSmallIntegerField(
+            choices=TRIBAL_STATUS,default=0
+      )
+      department_choice = models.ForeignKey(
+            _('department choice'),
+            Department,
+            on_delete=models.CASCADE
+      )
+      class Meta:
+            abstract = True
+      
+      def __str__(self):
+            return str(self.name)
 
 #!Student
 # class Student(TimeStampedModel):
-#     class BoyGirlSelect(models.TextChoices):
-#         BOY = "boy",_("Boy")
-#         GIRL = "girl",_("Girl")
+#       class BoyGirlSelect(models.TextChoices):
+#             BOY = "boy",_("Boy")
+#             GIRL = "girl",_("Girl")
 
 
 #     account = models.ForeignKey(_('account'),Account,on_delete=models.CASCADE)    
@@ -84,7 +87,7 @@ from django_extensions.db.models import TimeStampedModel
 #     ac_session = models.ForeignKey(_('academic session'),AcademicSession,on_delete=models.CASCADE,blank=True, null=True)
 #     batch = models.ForeignKey(_('batch'),Batch,on_delete=models.CASCADE,blank=True, null=True, related_name='students')
 #     guardian_mobile = models.CharField(_('guardian mobile'),validators=[phone_regex],max_length=12,blank=True,null=True,unique=True,help_text=phone_message)
-      #annual_paying_value= MoneyField(max_digits=14, decimal_places=2, default_currency='USD') #This is money field
+#       annual_paying_value= MoneyField(max_digits=14, decimal_places=2, default_currency='USD') #This is money field
 
 #     group_number = models.CharField(_('group number'),max_length=10)
 #     number_of_lessons = models.IntegerField(_('number of lessons'),default=48)
