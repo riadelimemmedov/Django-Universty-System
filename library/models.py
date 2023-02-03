@@ -44,11 +44,11 @@ class CategoryBook(models.Model):
 
 
 #!Author
-class Author(models.Models):
+class Author(models.Model):
     author_name = models.CharField(_('name'),max_length=50,db_index=True,unique=True)
     author_surname = models.CharField(_('surname'),max_length=50)
     author_slug = models.SlugField(_('author_slug'),unique=True,db_index=True,blank=True)
-    description = models.RichTextField(_('description'),blank=True,null=True)
+    description = RichTextField(_('description'),blank=True,null=True)
     birth_date = models.DateField(_("birthdate"),null=True,blank=True)
     died_date = models.DateField(_("died_date"),null=True,blank=True)
 
@@ -125,18 +125,18 @@ class Book(models.Model):
             VIETNAMESE = 'vi',_('Vietnamese')
             WELSH = 'cy',_('Welsh')
 
-    book_id = models.UUIDField(_('book id'),max_length=15,primary_key=True,unique=True,null=True,db_index=True,default=uuid.uuid4())
+    book_id = models.UUIDField(_('book id'),max_length=15,primary_key=True,unique=True,db_index=True,default=uuid.uuid4())
     language = models.CharField(_('language'),max_length=50,choices=LanguagesChoices.choices)
     book_title = models.CharField(_('book title'),max_length=50)
     summary=models.TextField(_('summary'),max_length=500,null=True,blank=True,help_text="Summary about the book")
-    book_author = models.ManyToManyField(_('author'),Author,related_name='bookauthor')
+    book_author = models.ManyToManyField('Author',related_name='bookauthor')
     book_pages = models.PositiveIntegerField(default=0)    
     book_slug = models.SlugField(_('book slug'),unique=True,db_index=True,blank=True)
-    book_image = models.ImageField(_('book image'),upload_to='book/',validators=[FileExtensionValidator[('png','jpg','jpeg')]])
-    department = models.ForeignKey(_('book department'),Department,on_delete=models.CASCADE,related_name='department_book')
-    batch = models.ForeignKey(_('book batch'),Batch,on_delete=models.CASCADE)
-    category = models.ForeignKey(_('category book'),CategoryBook,on_delete=models.SET_NULL,null=True,related_name='category_book')
-    book_type = models.CharField(_('book_type'),max_length=50,choices=BookChoices.choices,default=BookChoices.choices.BOOK)
+    #book_image = models.ImageField(_('book image'),upload_to='book/',validators=[FileExtensionValidator[('png','jpg','jpeg')]])
+    department = models.ForeignKey(Department,on_delete=models.CASCADE,related_name='department_book')
+    batch = models.ForeignKey(Batch,on_delete=models.CASCADE)
+    category = models.ForeignKey(CategoryBook,on_delete=models.SET_NULL,null=True,related_name='category_book')
+    book_type = models.CharField(_('book_type'),max_length=50,choices=BookChoices.choices)
     in_stock = models.BooleanField(_('in_stock'),default=False)
     available_copies = models.IntegerField(_('available_copies'),default=0)
 
@@ -157,9 +157,9 @@ class Book(models.Model):
 #!Library
 class Library(models.Model):
     library_name = models.CharField(_('library name'),max_length=50,blank=False)
-    librarian = models.ForeignKey(_('librarian account'),Account,on_delete=models.SET_NULL,null=True,related_name='librarian_library')
-    library_id = models.UUIDField(_('library id'),max_length=15,primary_key=True,unique=True,null=True,db_index=True,default=uuid.uuid4())
-    book = models.ManyToManyField(_('book library'),Book,related_name='book')
+    librarian = models.ForeignKey(Account,on_delete=models.SET_NULL,null=True,related_name='librarian_library')
+    library_id = models.UUIDField(_('library id'),max_length=15,primary_key=True,unique=True,db_index=True,default=uuid.uuid4())
+    book = models.ManyToManyField(Book,related_name='book')
     
     class Meta:
         verbose_name = 'Library'

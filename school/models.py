@@ -13,9 +13,8 @@ import uuid
 
 #Helpers Function and Database Modules
 from account.models import Account
-from teacher.models import (Teacher)
-from student.models import (Student)
-from core.models import (Department)
+from abstract.models import *
+
 from config.helpers import (get_profile_photo_upload_path,phone_message,phone_regex,name_message,name_regex,random_code,slugifyNameSurname)
 
 #Third Party Packages
@@ -46,14 +45,14 @@ class AcademicSession(TimeStampedModel):
 
 #!Batch
 class Batch(TimeStampedModel):#a group of students who are taught together at school, college, or university,qrup kimi bir se
-        year = models.ForeignKey(_('batch year'),AcademicSession,on_delete=models.CASCADE)
+        year = models.ForeignKey('AcademicSession',on_delete=models.CASCADE)
         number = models.PositiveIntegerField(_('batch number'))
         faculty_name = models.CharField(_('faculty name'),max_length=100)
-        department = models.ForeignKey(_('department'),Department,on_delete=models.CASCADE)
+        #department = models.ForeignKey('Department',on_delete=models.CASCADE)
 
         class Meta:
                 verbose_name_plural = 'Batches'
-                unique_together = ['year', 'department', 'number']
+                unique_together = ['year','number']
 
         def __str__(self):
                 return f'{self.department.name} Batch {self.number} ({self.year})'
@@ -79,8 +78,8 @@ class Subject(models.Model):
 #!Lesson
 class Lesson(models.Model):
         lesson_name = models.CharField(_('lesson name'),max_length=50,validators=[name_regex],help_text=name_message)
-        subject_for_lesson = models.ManyToManyField(_('subject for lesson'),Subject,related_name='subject_lesson')
-        teacher = models.ForeignKey(_('teacher'),Teacher,on_delete=models.CASCADE,related_name='teacher_lesson',blank=False,null=True)
+        subject_for_lesson = models.ManyToManyField('Subject',related_name='subject_lesson')
+        #teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name='teacher_lesson',blank=False,null=True)
         
         #*book = models.ForeignKey(_('book),related_name='lesson_book',Book)
         #lesson_code = models.CharField(_('lesson code'),max_length=15,db_index=True,null=True,blank=True,unique=True)
@@ -98,8 +97,8 @@ class Lesson(models.Model):
 #!Semestr
 class Semester(TimeStampedModel):
         number = models.PositiveIntegerField(_('semester number'),unique=True)
-        teacher = models.ManyToMany(('semester teacher'),Teacher,related_name='teacher_semester',null=True, blank=True)
-        lessons = models.ManyToManyField(('semester lesson'),Lesson,related_name='semester_lessons')
+        teacher = models.ManyToManyField('abstract.Teacher',related_name='teacher_semester',null=True, blank=True)
+        lessons = models.ManyToManyField('Lesson',related_name='semester_lessons')
         total_hours = models.PositiveIntegerField(_('total hours'),default=0)
 
         class Meta:
@@ -124,7 +123,7 @@ class Semester(TimeStampedModel):
 #!Awards
 class Awards(models.Model):
         awards_name = models.CharField(_('awards name'),max_length=100)
-        owner_awards_account = models.ManyToManyField(_('owner awards account'),Account,related_name='awards_user')
+        owner_awards_account = models.ManyToManyField(Account,related_name='awards_user')
         
         class Meta:
                 verbose_name = 'Award'
@@ -136,7 +135,7 @@ class Awards(models.Model):
 
 #!Revenue
 class Revenue(models.Model):
-        students = models.ManyToMany(_('students'),Student,related_name='student')
+        students = models.ManyToManyField('student.Student',related_name='student')
         
         class Meta:
                 verbose_name = 'Revenue'

@@ -1,7 +1,6 @@
 
 #short path with .. 
 import sys
-sys.path.append('..')
 
 #Django Function
 from django.db import models
@@ -14,8 +13,7 @@ import uuid
 
 #Helpers Function and Database Modules
 from account.models import Account
-from teacher.models import (Teacher)
-from school.models import (Batch)
+from abstract.models import Teacher
 from config.helpers import (get_profile_photo_upload_path,phone_message,phone_regex,name_message,name_regex,random_code,slugifyNameSurname)
 
 #Third Party Packages
@@ -29,7 +27,7 @@ from django_extensions.db.fields import RandomCharField
 
 #!SocialLink
 class SocialLink(models.Model):
-    user_account = models.ForeignKey(_('user account'),Account,on_delete=models.CASCADE,related_name='account_social_media')
+    user_account = models.ForeignKey(Account,on_delete=models.CASCADE,related_name='account_social_media')
     media_name = models.CharField(_('media name'),max_length=50)
     url = models.URLField(_('social media url'),default='')
 
@@ -53,11 +51,11 @@ class Department(TimeStampedModel):#Faculty for reqemsal iqtisadiyyat icinde amm
         blank=True,
         null=True
     )
-    head = models.ForeignKey(_('head'),Teacher,on_delete=models.CASCADE,blank=True, null=True)
-    current_batch = models.ForeignKey(_('current bacth'),Batch, on_delete=models.CASCADE,blank=True, null=True,related_name='current_batches')#Hansi qruplara baxir yeni
+    head = models.ForeignKey(Teacher,on_delete=models.CASCADE,blank=True, null=True)
+    current_batch = models.ForeignKey('school.Batch',on_delete=models.CASCADE,blank=True,null=True)#Hansi qruplara baxir yeni
     
-    batches = models.ManyToManyField( _('batches'),Batch,related_name='department_batches',blank=True)
-    created_by = models.ForeignKey(_('created by'),settings.AUTH_USER_MODEL,on_delete=models.DO_NOTHING,null=True)#only create dean well know dekan
+    batches = models.ManyToManyField('school.Batch',_('batches'),blank=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.DO_NOTHING,null=True)#only create dean well know dekan
 
     @property
     def dept_code(self):
