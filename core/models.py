@@ -13,14 +13,12 @@ import uuid
 
 #Helpers Function and Database Modules
 from account.models import Account
-from abstract.models import Teacher
 from config.helpers import (get_profile_photo_upload_path,phone_message,phone_regex,name_message,name_regex,random_code,slugifyNameSurname)
 
 #Third Party Packages
 from ckeditor.fields import RichTextField
 from django_extensions.db.models import TimeStampedModel
 from django_extensions.db.fields import RandomCharField
-
 
 
 
@@ -33,7 +31,6 @@ class SocialLink(models.Model):
 
     def __str__(self):
         return str(self.media_name)
-
 
 
 
@@ -51,7 +48,7 @@ class Department(TimeStampedModel):#Faculty for reqemsal iqtisadiyyat icinde amm
         blank=True,
         null=True
     )
-    head = models.ForeignKey(Teacher,on_delete=models.CASCADE,blank=True, null=True)
+    head = models.ForeignKey('teacher.Teacher',on_delete=models.CASCADE,blank=True, null=True)
     current_batch = models.ForeignKey('school.Batch',on_delete=models.CASCADE,blank=True,null=True)#Hansi qruplara baxir yeni
     
     batches = models.ManyToManyField('school.Batch',_('batches'),blank=True)

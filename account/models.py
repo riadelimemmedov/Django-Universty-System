@@ -24,10 +24,11 @@ from config.helpers import (get_profile_photo_upload_path,phone_message,phone_re
 
 
 #Third Party Packages
+from PIL import Image
 from multiselectfield import MultiSelectField
 from ckeditor.fields import RichTextField
+from django_countries.fields import CountryField
 from ckeditor_uploader.fields import RichTextUploadingField
-from PIL import Image
 
 # Create your models here.
 
@@ -112,8 +113,10 @@ class Account(AbstractBaseUser,PermissionsMixin):
     headline = models.CharField(_('headline'),max_length=255,null=True,blank=True)
     show_headline_in_bio = models.BooleanField(_('I want to use this as my bio'),default=False)
     summary = RichTextUploadingField(_('Your Profile Summary'),blank=True,null=True)
-    country = models.ForeignKey('cities_light.Country',on_delete=models.SET_NULL,null=True) 
-    city = models.ForeignKey('cities_light.City',on_delete=models.SET_NULL, null=True)
+    #country = models.ForeignKey('cities_light.Country',on_delete=models.SET_NULL,null=True)
+    country = CountryField()
+    city = models.CharField(_('city'),max_length=50)
+    
     adress = models.CharField(_('adress'),max_length=50,null=True)
     date_of_admission = models.DateField(_('date of admission'),null=True)
     registration_number = models.CharField(_('registration number'),max_length=50,db_index=True,null=True,blank=True,unique=True)

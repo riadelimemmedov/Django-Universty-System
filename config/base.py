@@ -35,7 +35,7 @@ THIRD_PARTY_APPS = [
     'django_cleanup',
     'multiselectfield',
     'ckeditor',
-    'cities_light',
+    'django_countries',
     'taggit'
 ]
 
@@ -46,7 +46,8 @@ CREATED_APPS = [
     'core',
     'school',
     'library',
-    'student'
+    'student',
+    'teacher'
 ]  
 
 #!Installed Apps

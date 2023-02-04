@@ -110,7 +110,7 @@ class Student(TimeStampedModel):
             )
 
 #!AdmissionStudent
-class AdmissionStudent(Student):
+class AdmissionStudent(StudentBase):
       APPLICATION_TYPE_CHOICE = (
             ('1', 'Online'),
             ('2', 'Offline')
