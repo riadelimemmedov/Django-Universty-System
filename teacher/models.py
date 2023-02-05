@@ -24,7 +24,13 @@ from django_extensions.db.fields import RandomCharField
 
 
 #!Designation
-# => http://www.sindheducation.gov.pk/Contents/Statics/teachers-designation-wise.pdf
+# => http://www.sindheducation.gov.pk/Contents/Statics/teachers-designation-wise.pdf 
+# Elementary school teachers.
+# Middle school teachers.
+# High school teachers.
+# Special education teachers.
+# ESL teachers.
+
 class Designation(TimeStampedModel):
     title = models.CharField(_('title'), max_length=255)
     created = models.DateField(auto_now_add=True)
@@ -39,12 +45,14 @@ class Designation(TimeStampedModel):
 
 #!Teacher
 class Teacher(TimeStampedModel):
+    account = models.ForeignKey(Account,on_delete=models.CASCADE,related_name='account_teacher')    
     designation = models.ForeignKey(Designation,on_delete=models.CASCADE, related_name='designation_teacher')
     father_name = models.CharField(_('father name'), max_length=50)
     is_phd = models.BooleanField(_('is phd'), default=False)
-    expertise = TaggableManager(blank=True)
+    expertise = models.CharField(_('expertise'),max_length=50,default='')
     # According to the semestr value
-    lessons = models.ManyToManyField('school.Lesson', related_name='lessons_teacher')
+    semestr = models.ManyToManyField('school.Semester',related_name='teacher_semester',blank=True)
+    
     joining_date = models.DateField(auto_now=True)
 
     created_by = models.ForeignKey(  # only director give position
@@ -58,4 +66,4 @@ class Teacher(TimeStampedModel):
         verbose_name_plural = 'Teachers'
 
     def __str__(self):
-        return '{} ({})'.format(self.account)
+        return '{}' .format(self.account)

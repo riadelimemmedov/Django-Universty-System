@@ -79,9 +79,9 @@ class Student(TimeStampedModel):
 
 
       account = models.ForeignKey(Account,on_delete=models.CASCADE)    
-    # admission_student = models.ForeignKey(AdmissionStudent,on_delete=models.CASCADE)
+      admission_student = models.ForeignKey('student.AdmissionStudent',on_delete=models.CASCADE)
       gender = models.CharField(_('gender'),max_length=6,unique=True,blank=True,null=True,choices=BoyGirlSelect.choices)
-    # registration_number = models.CharField(max_length=6,unique=True,)#\
+      # registration_number = models.CharField(max_length=6,unique=True,)#\
       registration_number = models.UUIDField(_('registration number'),max_length=6,db_index=True,unique=True,default=uuid.uuid4)
       semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
       ac_session = models.ForeignKey(AcademicSession,on_delete=models.CASCADE,blank=True, null=True)
@@ -100,6 +100,7 @@ class Student(TimeStampedModel):
       alumnus = AlumniManager()
 
       class Meta:
+            verbose_name = 'Main Student'
             ordering = ['semester','registration_number']
 
       def __str__(self):
@@ -120,6 +121,14 @@ class AdmissionStudent(StudentBase):
             ('College', 'College Exam'),
             ('VOCATIONAL', 'Vocational'),
       )
+      
+      BOARD = (
+            ('CBSE','Central Board of Secondary Education'),
+            ('ICSE','Indian Certificate of Secondary Education'),
+            ('CISCE','Council for the Indian School Certificate Examination'),
+            ('NIOS','National Institute of Open Schooling'),
+            ('IB','International Baccalauring')
+      )
 
       choosen_department = models.ForeignKey(
             Department,
@@ -135,7 +144,7 @@ class AdmissionStudent(StudentBase):
       )
       passing_year = models.CharField(_('passing year'),max_length=4)
       group = models.CharField(_('group'),max_length=15)
-      board = models.CharField(_('board'),max_length=100)
+      board = models.CharField(_('board'),choices=BOARD,max_length=100)
       gpa = models.DecimalField(decimal_places=2,max_digits=4)#ortalama giris bali filan
       marksheet_image = models.ImageField(_('marksheet image'),upload_to='students/applicants/marksheets/',blank=True, null=True)#cv kimi bir sey
       admission_policy_agreement = models.BooleanField(
@@ -163,11 +172,11 @@ class AdmissionStudent(StudentBase):
       assigned_as_student = models.BooleanField(default=False)
 
       class Meta:
-            verbose_name = 'Student'
-            verbose_name_plural = 'Students'
+            verbose_name = 'Admission Student'
+            verbose_name_plural = 'Admission Students'
 
       def __str__(self):  
-            return f"{self.name}"
+            return f"{self.admitted}"
 
 
 #!RegularStudent

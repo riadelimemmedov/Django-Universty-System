@@ -104,7 +104,6 @@ class Account(AbstractBaseUser,PermissionsMixin):
     phone = models.CharField(_('phone'),validators=[phone_regex],max_length=12,blank=True,null=True,unique=True,help_text=phone_message)
     
     
-    
     #!Extra Profile Data
     photo = models.ImageField(upload_to=get_profile_photo_upload_path,null=True,blank=False)
     

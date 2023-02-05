@@ -78,7 +78,9 @@ class Subject(models.Model):
 class Lesson(models.Model):
         lesson_name = models.CharField(_('lesson name'),max_length=50,validators=[name_regex],help_text=name_message)
         subject_for_lesson = models.ManyToManyField('Subject',related_name='subject_lesson')
-        teacher = models.ForeignKey('teacher.Teacher',on_delete=models.CASCADE,related_name='teacher_lesson',blank=False,null=True)
+        teachers = models.ManyToManyField('teacher.Teacher', related_name='lessons_teacher')
+        
+        #teacher = models.ForeignKey('teacher.Teacher',on_delete=models.CASCADE,related_name='teacher_lesson',blank=False,null=True)
         
         #*book = models.ForeignKey(_('book),related_name='lesson_book',Book)
         #lesson_code = models.CharField(_('lesson code'),max_length=15,db_index=True,null=True,blank=True,unique=True)
@@ -96,7 +98,6 @@ class Lesson(models.Model):
 #!Semestr
 class Semester(TimeStampedModel):
         number = models.PositiveIntegerField(_('semester number'),unique=True)
-        teacher = models.ManyToManyField('teacher.Teacher',related_name='teacher_semester',blank=True)
         lessons = models.ManyToManyField(Lesson,related_name='semester_lessons')
         total_hours = models.PositiveIntegerField(_('total hours'),default=0)
 

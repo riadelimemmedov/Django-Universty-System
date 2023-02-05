@@ -76,3 +76,5 @@ class AccountAdmin(UserAdmin):
     list_display_links = ("thumbnail","first_name","last_name")
     search_fields = ("first_name", "last_name","email", "phone")
     readonly_fields = ("date_joined","last_login")
+
+
