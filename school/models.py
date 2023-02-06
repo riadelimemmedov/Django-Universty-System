@@ -142,4 +142,4 @@ class Revenue(models.Model):
                 verbose_name_plural = 'Revenues'
         
         def __str__(self):
-                return str(self.students__name)
+                return str('All Revenue Quantity')

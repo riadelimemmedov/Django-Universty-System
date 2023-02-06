@@ -104,10 +104,9 @@ class Student(TimeStampedModel):
             ordering = ['semester','registration_number']
 
       def __str__(self):
-            return '{} ({}) semester {} dept.'.format(
-                  self.admission_student.name,
-                  self.semester,
-                  self.admission_student.choosen_department
+            return '({})  -   semester {}'.format(
+                  self.semester.number,
+                  self.account.name
             )
 
 #!AdmissionStudent
@@ -176,7 +175,7 @@ class AdmissionStudent(StudentBase):
             verbose_name_plural = 'Admission Students'
 
       def __str__(self):  
-            return f"{self.admitted}"
+            return f"Student universty to - {self.admitted}"
 
 
 #!RegularStudent
