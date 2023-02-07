@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- !Css Files -->
+    {% block css %}
+    
+    {% endblock css %}
+    
+    <!-- !Title -->
+    <title>Universty | {% block title %}{% endblock title %}</title>
+
+</head>
+
+<body>
+    <div class="main-wrapper">
+
+        <!-- !Navbar -->
+        {% include "./partials/_navbar.html" %}
+
+        <!-- !Sidebar -->
+        {% include "./partials/_sidebar.html" %}
+        
+
+        <!-- !Body -->
+        {% block body %}
+        
+        {% endblock body %}
+
+        <!-- !Footer -->
+        {% include "./partials/_footer.html" %}
+
+
+
+        <!-- !Javascript -->
+        {% block javascript %}
+        
+        {% endblock javascript %}
+
+    </div>
+</body>
+
+</html>

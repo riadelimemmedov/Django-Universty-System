@@ -47,7 +47,8 @@ CREATED_APPS = [
     'school',
     'library',
     'student',
-    'teacher'
+    'teacher',
+    'universty_admin'
 ]  
 
 #!Installed Apps
