@@ -9,5 +9,5 @@ from .views import *
 #!Url
 app_name = 'universty_admin'
 urlpatterns = [
-    path('account/',UniverstyAdminListView.as_view(),name='universty_admin')
+    path('account/',UniverstyAdminView.as_view(),name='universty_admin')
 ]

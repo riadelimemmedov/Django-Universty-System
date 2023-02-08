@@ -23,6 +23,17 @@ from django_extensions.db.fields import RandomCharField
 
 
 
+#------------------------------------------------------------------------------------------------------------------------------
+
+#*AllDepartmentsManager
+class AllDepartmentsManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().all()
+
+#------------------------------------------------------------------------------------------------------------------------------
+
+
+
 #!SocialLink
 class SocialLink(models.Model):
     user_account = models.ForeignKey(Account,on_delete=models.CASCADE,related_name='account_social_media')
@@ -34,7 +45,7 @@ class SocialLink(models.Model):
 
 
 
-#!Department
+#!Department 
 class Department(TimeStampedModel):#Faculty for reqemsal iqtisadiyyat icinde amma tehlukesilizk,texnalogiya,elmler var
     name = models.CharField(_('name of department'),max_length=255,unique=True)#Infomation Technology
     short_name = models.CharField(_('department short name'),max_length=5)#IT
@@ -54,6 +65,8 @@ class Department(TimeStampedModel):#Faculty for reqemsal iqtisadiyyat icinde amm
     batches = models.ManyToManyField('school.Batch',_('batches'),blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.DO_NOTHING,null=True)#only create dean well know dekan
 
+    departments = AllDepartmentsManager()
+    
     @property
     def dept_code(self):
         if not self.code:

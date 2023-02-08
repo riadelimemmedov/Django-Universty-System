@@ -25,7 +25,17 @@ from django_extensions.db.fields import RandomCharField
 
 # Create your models here.
 
-#!Department
+
+#---------------------------------------------------------------------------------------------------------------------
+
+
+#*AllAwardsManager
+class AllAwardsManager(models.Manager):
+        def get_queryset(self):
+                return super().get_queryset().all()
+
+
+#---------------------------------------------------------------------------------------------------------------------
 
 
 #!AcademicSession
@@ -120,10 +130,12 @@ class Semester(TimeStampedModel):
 
 
 
-#!Awards
+#!Awards 
 class Awards(models.Model):
         awards_name = models.CharField(_('awards name'),max_length=100)
         owner_awards_account = models.ManyToManyField(Account,related_name='awards_user')
+
+        awards = AllAwardsManager()
         
         class Meta:
                 verbose_name = 'Award'

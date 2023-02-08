@@ -6,6 +6,7 @@ sys.path.append('..')
 #Django Function
 from django.db import models
 from django.core.validators import MinValueValidator,MaxValueValidator,FileExtensionValidator
+from django.db.models import Avg,Max,Min,Sum
 from django.utils.translation import gettext_lazy as _
 
 #Python Modules
@@ -25,6 +26,7 @@ from django_extensions.db.models import TimeStampedModel
 
 # Create your models here.
 
+#--------------------------------------------------------------------------------------------------------------------------------------
 
 #*StudentManager
 class StudentManager(models.Manager):
@@ -36,6 +38,24 @@ class StudentManager(models.Manager):
 class AlumniManager(models.Manager):
       def get_queryset(self):
             return super().get_queryset().filter(is_alumni=True)
+      
+
+#*AllStudentsManager
+class AllStudentsManager(models.Manager):
+      def get_queryset(self):
+            return super().get_queryset().all()
+      
+
+#*AvarageAnnualPaying
+class AvarageAnnualPaying(models.Manager):
+      def get_queryset(self):
+            return super().get_queryset().all().aggregate(Avg('annual_paying_value'))
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 #!StudentBase
@@ -80,7 +100,7 @@ class Student(TimeStampedModel):
 
       account = models.ForeignKey(Account,on_delete=models.CASCADE)    
       admission_student = models.ForeignKey('student.AdmissionStudent',on_delete=models.CASCADE)
-      gender = models.CharField(_('gender'),max_length=6,unique=True,blank=True,null=True,choices=BoyGirlSelect.choices)
+      gender = models.CharField(_('gender'),max_length=6,blank=True,null=True,choices=BoyGirlSelect.choices)
       # registration_number = models.CharField(max_length=6,unique=True,)#\
       registration_number = models.UUIDField(_('registration number'),max_length=6,db_index=True,unique=True,default=uuid.uuid4)
       semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
@@ -95,13 +115,16 @@ class Student(TimeStampedModel):
       is_alumni = models.BooleanField(default=False)
       is_dropped = models.BooleanField(default=False)
 
-      # Managers
-      objects = StudentManager()
+      #?Managers
+      students = StudentManager()
       alumnus = AlumniManager()
+      all_students = AllStudentsManager()
+      avarage_annual_payings = AvarageAnnualPaying()
 
       class Meta:
             verbose_name = 'Main Student'
             ordering = ['semester','registration_number']
+            
 
       def __str__(self):
             return '({})  -   semester {}'.format(

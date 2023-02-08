@@ -26,11 +26,17 @@
         <!-- !Page Wrapper -->
         {% block body %}
             <div class="page-wrapper">
+                
+                
+                <br>
+
+
+
                 <div class="content container-fluid">
                     <div class="page-header">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h3 class="page-title">Welcome Admin!</h3>
+                                <h3 class="page-title">Welcome Admin - <span style="color:gray">{{request.user.username}}</span> </h3> 
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item active">Dashboard</li>
                                 </ul>
@@ -46,7 +52,7 @@
                                             <i class="fas fa-user-graduate"></i>
                                         </div>
                                         <div class="db-info">
-                                            <h3>50055</h3>
+                                            <h3>{{contextdata.students_all|length}}</h3>
                                             <h6>Students</h6>
                                         </div>
                                     </div>
@@ -61,7 +67,7 @@
                                             <i class="fas fa-crown"></i>
                                         </div>
                                         <div class="db-info">
-                                            <h3>50+</h3>
+                                            <h3>{{contextdata.awards_all|length}}</h3>
                                             <h6>Awards</h6>
                                         </div>
                                     </div>
@@ -76,7 +82,7 @@
                                             <i class="fas fa-building"></i>
                                         </div>
                                         <div class="db-info">
-                                            <h3>30+</h3>
+                                            <h3>{{contextdata.departments_all|length}}</h3>
                                             <h6>Department</h6>
                                         </div>
                                     </div>
@@ -91,7 +97,7 @@
                                             <i class="fas fa-file-invoice-dollar"></i>
                                         </div>
                                         <div class="db-info">
-                                            <h3>$505</h3>
+                                            <h3>${{contextdata.avg_revenue}}</h3>
                                             <h6>Revenue</h6>
                                         </div>
                                     </div>
