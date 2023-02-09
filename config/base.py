@@ -193,4 +193,8 @@ JET_THEMES = [
 #Create requirements.txt file
 #python -m pip freeze
 #pip freeze > requirements.txt
-#python manage.py dumpdata > datadump.json => dump sqlite
+
+
+#python manage.py dumpdata > datadump.json => dump sqlite data
+#python manage.py migrate --run-syncdb => create table for migrationed data
+#python manage.py loaddata datadump.json => send data postgress
