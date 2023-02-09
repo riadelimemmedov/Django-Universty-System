@@ -13,6 +13,9 @@ from itertools import chain
 # Create your views here.
 
 
+def index(request):
+    return HttpResponse('Hello Index Page')
+
 #!UniverstyAdminListView
 class UniverstyAdminView(TemplateView):
     template_name = 'universty_admin/universty_admin.html'
