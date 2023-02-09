@@ -11,12 +11,26 @@ ALLOWED_HOSTS = [
 ]
 
 #!Databases
+
+#Default Sqlite
+# DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+# }
+
+#Migrate Postgress and Docker
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": config("ENGINE"),
+            "NAME": config("POSTGRES_NAME"),
+            "USER": config("POSTGRES_USER"),
+            "PASSWORD": config("PASSWORD"),
+            "HOST": config("HOST"),
+            "PORT": config('PORT',5432)
         }
-}
+    }
 
 #!Installed Apps
 INSTALLED_APPS += []

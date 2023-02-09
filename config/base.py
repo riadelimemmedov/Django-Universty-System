@@ -193,3 +193,4 @@ JET_THEMES = [
 #Create requirements.txt file
 #python -m pip freeze
 #pip freeze > requirements.txt
+#python manage.py dumpdata > datadump.json => dump sqlite
