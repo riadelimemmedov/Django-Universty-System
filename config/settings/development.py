@@ -24,11 +24,11 @@ ALLOWED_HOSTS = [
 DATABASES = {
         "default": {
             "ENGINE": config("ENGINE"),
-            "NAME": config("POSTGRES_NAME"),
+            "NAME": config("POSTGRES_DB"),
             "USER": config("POSTGRES_USER"),
-            "PASSWORD": config("PASSWORD"),
-            "HOST": config("HOST"),
-            "PORT": config('PORT',5432)
+            "PASSWORD": config("POSTGRES_PASSWORD"),
+            "HOST": config("POSTGRES_HOST"),
+            "PORT": config('POSTGRES_PORT',5432)
         }
     }
 

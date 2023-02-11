@@ -18,3 +18,4 @@ services: #the different images that will be running as containers
   postgres-db:
       image: postgres
       container_name: db
+      env_file: .env
