@@ -13,9 +13,9 @@ services: #the different images that will be running as containers
     ports: #service runnig port
       - "7000:7000"
     depends_on: #child container,whick integrated to inside universty container,work as a together
-      - postgres-db
+      - pgdb
   
-  postgres-db:
+  pgdb:
       image: postgres
-      container_name: db
+      container_name: pgdb #match to django HOST keyword
       env_file: .env
