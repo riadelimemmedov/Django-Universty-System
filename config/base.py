@@ -18,6 +18,16 @@ APP_NAME = "ADMIN" #Default Admin
 SECRET_KEY = config('SECRET_KEY')
 
 
+#!# PROD, LOCAL, DEV
+ENVIRONMENT = config('ENVIRONMENT',default='LOCAL')
+ALLOWED_HOSTS = [] 
+
+if ENVIRONMENT != "LOCAL":
+    pass
+else:
+    ALLOWED_HOSTS.append('*')
+
+
 #!Application definition
 DEFAULT_APPS = [
     'jet.dashboard',

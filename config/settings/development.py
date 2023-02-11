@@ -4,11 +4,6 @@ from decouple import config
 #!Debug
 DEBUG = True
 
-#!Allowed Hosts
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-]
 
 #!Databases
 
