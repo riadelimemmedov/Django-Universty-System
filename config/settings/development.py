@@ -18,11 +18,11 @@ DEBUG = True
 #Migrate Postgress and Docker
 DATABASES = {
         "default": {
-            "ENGINE": config("ENGINE"),
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "HOST": config("POSTGRES_HOST"),
             "NAME": config("POSTGRES_DB"),
             "USER": config("POSTGRES_USER"),
             "PASSWORD": config("POSTGRES_PASSWORD"),
-            "HOST": config("POSTGRES_HOST"),
             "PORT": config('POSTGRES_PORT',5432)
         }
     }
