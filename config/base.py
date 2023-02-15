@@ -20,7 +20,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 #!# PROD, LOCAL, DEV
 ENVIRONMENT = config('ENVIRONMENT',default='LOCAL')
-ALLOWED_HOSTS = [] 
+ALLOWED_HOSTS = []#In order to allow access to the Django app from any server or IP address,ensure ALLOWED_HOSTS in settings.py file set to *,as shown in the left
 
 if ENVIRONMENT != "LOCAL":
     pass
@@ -198,6 +198,24 @@ JET_THEMES = [
         'title': 'Light Gray'
     }
 ]
+
+
+
+#!Celery
+CELERY_BROKER_URL = config('CELERY_BROKER_URL',default='redis://redis:6379')
+CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND',default='redis://redis:6379')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Baku'
+
+
+# #!Django Celery Results Configuration
+# ELERY_RESULT_BACKEND = 'django-db' #=> django_celery_results
+
+# #!Django Celery Beat Configuration
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler' #=> django_celery_beat
+
 
 
 #Create requirements.txt file

@@ -1,5 +1,5 @@
 #Base Image
-FROM python:3.10
+FROM python:3
 
 #setup environment variable
 ENV PYTHONUNBUFFERED=1
