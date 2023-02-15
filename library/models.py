@@ -125,7 +125,7 @@ class Book(models.Model):
             VIETNAMESE = 'vi',_('Vietnamese')
             WELSH = 'cy',_('Welsh')
 
-    book_id = models.UUIDField(_('book id'),max_length=15,primary_key=True,unique=True,db_index=True,default=uuid.uuid4())
+    book_id = models.CharField(_('book id'),max_length=50,db_index=True,unique=True,null=True,blank=True)    
     language = models.CharField(_('language'),max_length=50,choices=LanguagesChoices.choices)
     book_title = models.CharField(_('book title'),max_length=50)
     summary=models.TextField(_('summary'),max_length=500,null=True,blank=True,help_text="Summary about the book")
@@ -150,6 +150,7 @@ class Book(models.Model):
         
     def save(self, *args, **kwargs):
         self.book_slug = slugifyNameSurname(self.book_title)
+        self.book_id = random_code()
         super(Book,self).save(*args,**kwargs)
         
 
@@ -158,8 +159,8 @@ class Book(models.Model):
 class Library(models.Model):
     library_name = models.CharField(_('library name'),max_length=50,blank=False)
     librarian = models.ForeignKey(Account,on_delete=models.SET_NULL,null=True,related_name='librarian_library')
-    library_id = models.UUIDField(_('library id'),max_length=15,primary_key=True,unique=True,db_index=True,default=uuid.uuid4())
     book = models.ManyToManyField(Book,related_name='book')
+    library_id = models.CharField(_('library id'),max_length=50,db_index=True,unique=True,null=True,blank=True)
     
     class Meta:
         verbose_name = 'Library'
@@ -167,4 +168,10 @@ class Library(models.Model):
     
     def __str__(self):
         return "{} ({})".format(self.name,self.library_id)
+
+    #*save
+    def save(self,*args,**kwargs):
+        #save library id
+        self.library_id = random_code()
+        super(Library,self).save(*args,**kwargs)
 

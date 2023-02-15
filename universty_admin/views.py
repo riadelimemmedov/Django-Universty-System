@@ -27,6 +27,6 @@ class UniverstyAdminView(TemplateView):
                                     'students_all':Student.all_students.all(),
                                     'awards_all':Awards.awards.all(),
                                     'departments_all':Department.departments.all(),
-                                    'avg_revenue':Student.avarage_annual_payings.all()['annual_paying_value__avg']
+                                    'avg_revenue':True if Student.avarage_annual_payings.all()['annual_paying_value__avg'] != None else 0 
                                 }
         return context

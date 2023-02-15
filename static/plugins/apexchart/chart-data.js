@@ -21,14 +21,14 @@ $(document).ready(function() {
 		},
 		series: [{
 			name: "Teachers",
-			data: [45, 60, 75, 51, 42, 42, 30]
+			data: [45, 60, 75, 51, 42, 42, 30,42,92,65,22,15]
 		}, {
 			name: "Students",
 			color: '#FFBC53',
-			data: [24, 48, 56, 32, 34, 52, 25]
+			data: [24, 48, 56, 32, 34, 52, 25,32,68,75,88,96]
 		}],
 		xaxis: {
-			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July','Aug','Sept','Oct','Nov','Dec'],
 		}
 	}
 	var chart = new ApexCharts(

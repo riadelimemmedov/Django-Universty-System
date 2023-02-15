@@ -164,6 +164,8 @@ class AdmissionStudent(StudentBase):
             choices=EXAM_NAMES,
             max_length=10
       )
+      is_paid = models.BooleanField(_('is paying'),default=True)
+      is_scholarship = models.BooleanField(_('is scholarship'),default=False)
       passing_year = models.CharField(_('passing year'),max_length=4)
       group = models.CharField(_('group'),max_length=15)
       board = models.CharField(_('board'),choices=BOARD,max_length=100)
