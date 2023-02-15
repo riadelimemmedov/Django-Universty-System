@@ -202,12 +202,8 @@ JET_THEMES = [
 
 
 #!Celery
-CELERY_BROKER_URL = config('CELERY_BROKER_URL',default='redis://redis:6379')
-CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND',default='redis://redis:6379')
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Baku'
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER','redis://redis:6379/0')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_BACKEND','redis://redis:6379/0')
 
 
 # #!Django Celery Results Configuration
