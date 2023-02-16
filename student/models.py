@@ -146,8 +146,8 @@ class AdmissionStudent(StudentBase):
       
       BOARD = (
             ('CBSE','Central Board of Secondary Education'),
-            ('ICSE','Indian Certificate of Secondary Education'),
-            ('CISCE','Council for the Indian School Certificate Examination'),
+            ('ICSE','Azerbaijian Certificate of Secondary Education'),
+            ('CISCE','Council for the Azerbaijan School Certificate Examination'),
             ('NIOS','National Institute of Open Schooling'),
             ('IB','International Baccalauring')
       )
@@ -164,12 +164,12 @@ class AdmissionStudent(StudentBase):
             choices=EXAM_NAMES,
             max_length=10
       )
-      is_paid = models.BooleanField(_('is paying'),default=True)
+      is_paid = models.BooleanField(_('is paid'),default=False)
       is_scholarship = models.BooleanField(_('is scholarship'),default=False)
       passing_year = models.CharField(_('passing year'),max_length=4)
       group = models.CharField(_('group'),max_length=15)
       board = models.CharField(_('board'),choices=BOARD,max_length=100)
-      gpa = models.DecimalField(decimal_places=2,max_digits=4)#ortalama giris bali filan
+      gpa = models.DecimalField(decimal_places=2,max_digits=4)#ortalama giris bali filan,if less than 200,
       marksheet_image = models.ImageField(_('marksheet image'),upload_to='students/applicants/marksheets/',blank=True, null=True)#cv kimi bir sey
       admission_policy_agreement = models.BooleanField(
             _('admission policy aggrement'),
@@ -179,8 +179,7 @@ class AdmissionStudent(StudentBase):
             default=False
       ),
       admitted = models.BooleanField(_('is admitted'),default=False)
-      admission_date = models.DateField(_('admission date'),blank=True,null=True)
-      paid = models.BooleanField(default=False)
+      admission_date = models.DateField(_('admission date'),blank=True,null=True)#
       application_type = models.CharField(
             _('apllication type'),
             max_length=1,
