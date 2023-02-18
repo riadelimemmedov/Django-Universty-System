@@ -102,6 +102,8 @@ class Student(TimeStampedModel):
       admission_student = models.ForeignKey('student.AdmissionStudent',on_delete=models.CASCADE)
       gender = models.CharField(_('gender'),max_length=6,blank=True,null=True,choices=BoyGirlSelect.choices)
       # registration_number = models.CharField(max_length=6,unique=True,)#\
+      passing_year = models.CharField(_('passing year'),max_length=4)
+      admission_date = models.DateField(_('admission date'),blank=True,null=True)#
       registration_number = models.UUIDField(_('registration number'),max_length=6,db_index=True,unique=True,default=uuid.uuid4)
       semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
       ac_session = models.ForeignKey(AcademicSession,on_delete=models.CASCADE,blank=True, null=True)
@@ -152,6 +154,7 @@ class AdmissionStudent(StudentBase):
             ('IB','International Baccalauring')
       )
 
+      full_name = models.CharField(_('Full Name'),max_length=50)
       choosen_department = models.ForeignKey(
             Department,
             related_name='admission_students',
@@ -166,7 +169,6 @@ class AdmissionStudent(StudentBase):
       )
       is_paid = models.BooleanField(_('is paid'),default=False)
       is_scholarship = models.BooleanField(_('is scholarship'),default=False)
-      passing_year = models.CharField(_('passing year'),max_length=4)
       group = models.CharField(_('group'),max_length=15)
       board = models.CharField(_('board'),choices=BOARD,max_length=100)
       gpa = models.DecimalField(decimal_places=2,max_digits=4)#ortalama giris bali filan,if less than 200,
@@ -179,7 +181,6 @@ class AdmissionStudent(StudentBase):
             default=False
       ),
       admitted = models.BooleanField(_('is admitted'),default=False)
-      admission_date = models.DateField(_('admission date'),blank=True,null=True)#
       application_type = models.CharField(
             _('apllication type'),
             max_length=1,
@@ -199,7 +200,7 @@ class AdmissionStudent(StudentBase):
             verbose_name_plural = 'Admission Students'
 
       def __str__(self):  
-            return f"Student universty to - {self.admitted}"
+            return f"Student universty to - {self.full_name}"
 
 
 #!RegularStudent

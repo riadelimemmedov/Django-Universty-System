@@ -3,6 +3,21 @@
 $(document).ready(function() {
 
 	// Area chart
+	console.log('isledi hocam', window.location.href)
+	let current_url = window.location.href.replace('account/','get/avg/month/revenue')
+	console.log('current url for avg ', current_url)
+
+	$.ajax({
+		type:'GET',
+		url:current_url,
+		success:function(response){
+			console.log('nodlu ala', response)
+		},
+		error:function(err){
+			console.log('error when request to url ', err)
+		}
+		
+	})
 	
 	if ($('#apexcharts-area').length > 0) {
 	var options = {

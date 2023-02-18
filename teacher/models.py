@@ -55,10 +55,10 @@ class Teacher(TimeStampedModel):
     
     joining_date = models.DateField(auto_now=True)
 
-    created_by = models.ForeignKey(  # only director give position
-        settings.AUTH_USER_MODEL,
-        on_delete=models.DO_NOTHING, null=True
-    )
+    #created_by = models.ForeignKey(  # only director give position
+        #settings.AUTH_USER_MODEL,
+        #on_delete=models.DO_NOTHING, null=True
+    #)
 
     class Meta:
         ordering = ['joining_date']

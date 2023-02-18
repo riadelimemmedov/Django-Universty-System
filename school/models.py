@@ -88,7 +88,7 @@ class Subject(models.Model):
 class Lesson(models.Model):
         lesson_name = models.CharField(_('lesson name'),max_length=50,validators=[name_regex],help_text=name_message)
         subject_for_lesson = models.ManyToManyField('Subject',related_name='subject_lesson')
-        teachers = models.ManyToManyField('teacher.Teacher', related_name='lessons_teacher')
+        #teachers = models.ManyToManyField('teacher.Teacher', related_name='lessons_teacher')
         
         #teacher = models.ForeignKey('teacher.Teacher',on_delete=models.CASCADE,related_name='teacher_lesson',blank=False,null=True)
         
