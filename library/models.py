@@ -1,3 +1,6 @@
+from django.db import models
+
+# Create your models here.
 #short path with .. 
 import sys
 sys.path.append('..')
@@ -156,22 +159,22 @@ class Book(models.Model):
 
 
 #!Library
-class Library(models.Model):
+class UniverstyLibrary(models.Model):
     library_name = models.CharField(_('library name'),max_length=50,blank=False)
     librarian = models.ForeignKey(Account,on_delete=models.SET_NULL,null=True,related_name='librarian_library')
     book = models.ManyToManyField(Book,related_name='book')
-    library_id = models.CharField(_('library id'),max_length=50,db_index=True,unique=True,null=True,blank=True)
+    libraryid = models.CharField(_('ddd'),max_length=50,db_index=True,unique=True,null=True,blank=True)
     
     class Meta:
         verbose_name = 'Library'
         verbose_name_plural = 'libraries'
     
     def __str__(self):
-        return "{} ({})".format(self.name,self.library_id)
+        return "{}".format(self.library_name)
 
     #*save
     def save(self,*args,**kwargs):
         #save library id
         self.library_id = random_code()
-        super(Library,self).save(*args,**kwargs)
+        super(UniverstyLibrary,self).save(*args,**kwargs)
 

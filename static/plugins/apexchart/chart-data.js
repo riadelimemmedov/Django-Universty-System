@@ -3,22 +3,31 @@
 $(document).ready(function() {
 
 	// Area chart
-	console.log('isledi hocam', window.location.href)
-	let current_url = window.location.href.replace('account/','get/avg/month/revenue')
-	console.log('current url for avg ', current_url)
+	let currentUrl = window.location.href.replace('account/','get/avg/month/revenue')
+	let admissionMonthList = null
+	let months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+	let avgMonthRevenue = []
 
 	$.ajax({
 		type:'GET',
-		url:current_url,
+		url:currentUrl,
 		success:function(response){
-			console.log('nodlu ala', response)
+			admissionMonthList = response.admission_months_list
 		},
 		error:function(err){
 			console.log('error when request to url ', err)
 		}
-		
 	})
-	
+
+	setTimeout(()=>{
+		months.forEach((value,index)=>{
+			avgMonthRevenue.push(admissionMonthList[index][value][0]==null ? 0 : Number(admissionMonthList[index][value][0]))
+		})
+	},1000)
+
+	setTimeout(()=>{
+	},1500)
+
 	if ($('#apexcharts-area').length > 0) {
 	var options = {
 		chart: {
@@ -40,7 +49,7 @@ $(document).ready(function() {
 		}, {
 			name: "Students",
 			color: '#FFBC53',
-			data: [24, 48, 56, 32, 34, 52, 25,32,68,75,88,96]
+			data: avgMonthRevenue
 		}],
 		xaxis: {
 			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July','Aug','Sept','Oct','Nov','Dec'],

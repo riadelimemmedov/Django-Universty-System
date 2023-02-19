@@ -16,11 +16,6 @@ import calendar
 
 # Create your views here.
 
-
-def index(request):
-    return HttpResponse('Hello Index Page')
-
-
 #*getAvarageMonthRevenue
 def getAvarageMonthRevenue(request):
         month_number=1
@@ -29,11 +24,14 @@ def getAvarageMonthRevenue(request):
             for i in Student.all_students.all():
                 month_name = calendar.month_name[month_number]
                 students = list(Student.all_students.filter(admission_date__month=month_number).aggregate(Avg('annual_paying_value')).values())
-                admission_months_list.append({f"{month_name}:{students}"})
+                admission_months_list.append({month_name:students})
 
                 month_number+=1
         print('admission months list ', admission_months_list)
-        return HttpResponse(admission_months_list)
+        return JsonResponse({'admission_months_list': admission_months_list},safe=False)
+
+
+
 
 #!UniverstyAdminListView
 class UniverstyAdminView(TemplateView):
@@ -42,10 +40,6 @@ class UniverstyAdminView(TemplateView):
     
     def get_context_data(self,**kwargs):
         studentAvaragePaying = Student.avarage_annual_payings.all()['annual_paying_value__avg']
-    
-
-                
-        
         context = super(UniverstyAdminView, self).get_context_data(**kwargs)
         context['contextdata'] = {
                                     'students_all':Student.all_students.all(),
