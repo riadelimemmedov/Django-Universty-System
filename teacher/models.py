@@ -1,3 +1,6 @@
+from django.db import models
+
+# Create your models here.
 #short path with .. 
 import sys
 sys.path.append('..')
@@ -18,6 +21,7 @@ from config.helpers import (get_profile_photo_upload_path,phone_message,phone_re
 #Third Party Packages
 from ckeditor.fields import RichTextField
 from taggit.managers import TaggableManager
+from djmoney.models.fields import MoneyField
 from django_extensions.db.models import TimeStampedModel
 from django_extensions.db.fields import RandomCharField
 
@@ -46,10 +50,13 @@ class Designation(TimeStampedModel):
 #!Teacher
 class Teacher(TimeStampedModel):
     account = models.ForeignKey(Account,on_delete=models.CASCADE,related_name='account_teacher')    
-    designation = models.ForeignKey(Designation,on_delete=models.CASCADE, related_name='designation_teacher')
+    #designation = models.ForeignKey(Designation,on_delete=models.CASCADE, related_name='designation_teacher')
     father_name = models.CharField(_('father name'), max_length=50)
     is_phd = models.BooleanField(_('is phd'), default=False)
     expertise = models.CharField(_('expertise'),max_length=50,default='')
+    name = models.CharField(max_length=20)
+    monthly_badge = MoneyField(max_digits=14,decimal_places=2,null=True,default_currency='AZN') #This is money field
+    
     # According to the semestr value
     semestr = models.ManyToManyField('school.Semester',related_name='teacher_semester',blank=True)
     
