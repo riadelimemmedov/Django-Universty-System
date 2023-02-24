@@ -59,7 +59,7 @@ class Department(TimeStampedModel):#Faculty for reqemsal iqtisadiyyat icinde amm
         blank=True,
         null=True
     )
-    head = models.ForeignKey('teacher.Teacher',on_delete=models.CASCADE,blank=True, null=True)
+    #head = models.ForeignKey('teacher.Teacher',on_delete=models.CASCADE,blank=True, null=True)
     current_batch = models.ForeignKey('school.Batch',on_delete=models.CASCADE,blank=True,null=True)#Hansi qruplara baxir yeni
     
     batches = models.ManyToManyField('school.Batch',_('batches'),blank=True)

@@ -3,20 +3,27 @@
 $(document).ready(function() {
 
 	// Area chart
-	let currentUrl = window.location.href.replace('account/','get/avg/month/revenue')
+
+	let getAvgMonthRevenue = window.location.href.replace('account/','get/avg/month/revenue')
+	let getEveryYearStudentsCount = window.location.href.replace('account/','get/every/year/students/count')
+	var urls = [getAvgMonthRevenue, getEveryYearStudentsCount]
+
 	let admissionMonthList = null
 	let months = ['January','February','March','April','May','June','July','August','September','October','November','December']
 	let avgMonthRevenue = []
 
-	$.ajax({
-		type:'GET',
-		url:currentUrl,
-		success:function(response){
-			admissionMonthList = response.admission_months_list
-		},
-		error:function(err){
-			console.log('error when request to url ', err)
-		}
+	$.each(urls, function(index,element){
+		$.ajax({
+			type: 'GET',
+			url:element,
+			success: function(response){
+				admissionMonthList = response.admission_months_list
+				console.log('Response value', response)
+			},
+			error: function(err){
+				console.log('Error value ', err)
+			}
+		})
 	})
 
 	setTimeout(()=>{

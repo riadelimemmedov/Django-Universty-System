@@ -2,6 +2,7 @@
 from django.shortcuts import render,HttpResponse
 from django.db.models import Avg
 from django.http import JsonResponse
+from django.utils import timezone
 from django.views.generic import *
 
 #Helpers Function and Database Modules
@@ -10,14 +11,13 @@ from school.models import Awards
 from core.models import Department
 
 #Python Modules
-from itertools import chain
-from django.core import serializers
 import calendar
 
 # Create your views here.
 
 #*getAvarageMonthRevenue
 def getAvarageMonthRevenue(request):
+        print('timezone value ', timezone.now().strftime('%Y'))
         month_number=1
         admission_months_list = []
         while(month_number<=12):
@@ -25,12 +25,25 @@ def getAvarageMonthRevenue(request):
                 month_name = calendar.month_name[month_number]
                 students = list(Student.all_students.filter(admission_date__month=month_number).aggregate(Avg('annual_paying_value')).values())
                 admission_months_list.append({month_name:students})
-
                 month_number+=1
-        print('admission months list ', admission_months_list)
         return JsonResponse({'admission_months_list': admission_months_list},safe=False)
 
 
+#*getEveryYearStudentsCount
+def getEveryYearStudentsCount(request):
+    universty_created_year = 2015
+    boys_students = []
+    girls_students = []
+    current_year = timezone.now().strftime('%Y')
+    while(universty_created_year <= int(current_year)):
+        boys = list(Student.all_students.filter(admission_date__year=universty_created_year,gender='boy').values())
+        girls = list(Student.all_students.filter(admission_date__year=universty_created_year,gender='girl').values())        
+        boys_students.append({universty_created_year:boys})
+        girls_students.append({universty_created_year:girls})
+        
+        girls_students.append(girls)
+        universty_created_year+=1
+    return JsonResponse({'boys_students':boys_students,'girls_students':girls_students},safe=False)
 
 
 #!UniverstyAdminListView

@@ -1,5 +1,8 @@
 from django.db import models
 
+#Create your models here.
+from django.db import models
+
 # Create your models here.
 #short path with .. 
 import sys
@@ -35,6 +38,17 @@ from django_extensions.db.fields import RandomCharField
 # Special education teachers.
 # ESL teachers.
 
+
+
+
+#*StudentManager
+class TeacherManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().all()
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------------
+
 class Designation(TimeStampedModel):
     title = models.CharField(_('title'), max_length=255)
     created = models.DateField(auto_now_add=True)
@@ -50,12 +64,13 @@ class Designation(TimeStampedModel):
 #!Teacher
 class Teacher(TimeStampedModel):
     account = models.ForeignKey(Account,on_delete=models.CASCADE,related_name='account_teacher')    
-    #designation = models.ForeignKey(Designation,on_delete=models.CASCADE, related_name='designation_teacher')
+    designation = models.ForeignKey(Designation,on_delete=models.CASCADE,null=True,related_name='designation_teacher')
     father_name = models.CharField(_('father name'), max_length=50)
     is_phd = models.BooleanField(_('is phd'), default=False)
     expertise = models.CharField(_('expertise'),max_length=50,default='')
-    name = models.CharField(max_length=20)
-    monthly_badge = MoneyField(max_digits=14,decimal_places=2,null=True,default_currency='AZN') #This is money field
+    annual_paying_value = MoneyField(max_digits=14,decimal_places=2,null=True,default_currency='AZN') #This is money field
+    admission_date = models.DateField(_('admission date'),blank=True,null=True)#
+    
     
     # According to the semestr value
     semestr = models.ManyToManyField('school.Semester',related_name='teacher_semester',blank=True)
@@ -66,6 +81,10 @@ class Teacher(TimeStampedModel):
         #settings.AUTH_USER_MODEL,
         #on_delete=models.DO_NOTHING, null=True
     #)
+    
+    
+    #?Managers
+    teachers = TeacherManager()
 
     class Meta:
         ordering = ['joining_date']
@@ -74,3 +93,4 @@ class Teacher(TimeStampedModel):
 
     def __str__(self):
         return '{}' .format(self.account)
+

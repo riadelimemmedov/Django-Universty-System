@@ -14,5 +14,6 @@ urlpatterns = [
     
     #Function Based View
     path('get/avg/month/revenue',getAvarageMonthRevenue,name='get_avg_month_revenue'),
+    path('get/every/year/students/count',getEveryYearStudentsCount,name='get_every_year_students_count'),
     
 ]
